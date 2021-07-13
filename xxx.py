@@ -85,6 +85,7 @@ tooltip.place(
 
 
 #* CONFIGURATION WINDOW
+
 def settings():
 
     conf = Toplevel()
@@ -134,6 +135,7 @@ def settings():
         x=60, y=130
     )
 
+
 # tooltip function
 def settings_hover(e):
 
@@ -166,7 +168,7 @@ stg_button.bind("<Enter>", settings_hover)
 
 
 #*IMPORTING DATAFILE
-# TODO finish import system, settings - may not be a popup window :D
+# TODO settings - may not be a popup window :D 
 
 
 def openFile():
@@ -175,10 +177,29 @@ def openFile():
         title="Open a file, you cunt", # TODO #1 also change this later 
         filetypes=(
             ("text files", "*.txt"),
-            ("all files", "*.*")
+            ("CSV files", "*.csv"),
+            ("All files", "*.*")
             ),      
     )
-    datafile = open(filepath)
+    datafile = open(filepath, 'r')
+    
+
+    display.config(
+        state=NORMAL
+    )
+
+    display.delete(
+        1.0, END
+    )
+
+    display.insert(
+        END,
+        datafile.read()
+    )
+
+    display.config(
+        state=DISABLED
+    )
 
 
 def opn_hover(e):
@@ -217,7 +238,7 @@ file_open.bind(
 def dpl_hover(e):
 
     tooltip.config(
-        text="In this window will be displayed the content of the imported file"
+        text="In this window the content of the imported file will be displayed."
     )
 
 
