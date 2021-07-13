@@ -168,10 +168,11 @@ stg_button.bind("<Enter>", settings_hover)
 #*IMPORTING DATAFILE
 # TODO finish import system, settings - may not be a popup window :D
 
+
 def openFile():
 
     filepath = filedialog.askopenfilename(
-        title="Open a file, you cunt", # TODO #1 also change this later
+        title="Open a file, you cunt", # TODO #1 also change this later 
         filetypes=(
             ("text files", "*.txt"),
             ("all files", "*.*")
