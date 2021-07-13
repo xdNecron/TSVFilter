@@ -5,7 +5,7 @@ from tkinter import filedialog
 
 root = Tk()
 root.configure(bg="white")
-root.title("XCMS bullshit")
+root.title("XCMSDataAnalysis")
 root.geometry('1000x600')
 root.resizable(height=False, width=False)
 
@@ -138,7 +138,7 @@ def settings():
 def settings_hover(e):
 
     tooltip.config(
-        text="Here you can configutate which tolerances the script will use to find desired values."
+        text="Here you can configurate which tolerances the script will use to find desired values."
     )
 
 
@@ -171,7 +171,7 @@ stg_button.bind("<Enter>", settings_hover)
 def openFile():
 
     filepath = filedialog.askopenfilename(
-        title="Open a file, you cunt",
+        title="Open a file, you cunt", # TODO #1 also change this later
         filetypes=(
             ("text files", "*.txt"),
             ("all files", "*.*")
