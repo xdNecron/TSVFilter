@@ -144,26 +144,32 @@ def settings_hover(e):
     )
 
 
-# settings button - opens config list
+# next button - re-renders root
+
+def next_page():
+
+    pass
+
+
 btn_texture = PhotoImage(
-    file="textures/stg_button.png"
+    file="textures/next_btn.png"
 )
 
-stg_button = Button(
+next_btn = Button(
     image=btn_texture,
     highlightthickness=0,
     borderwidth=0,
-    command=settings,
+    command=next_page,
     pady=30,
     bg="white"
 )
-stg_button.place(
-    x=53, y=321,
+next_btn.place(
+    x=53, y=408,
     height=35,
     width=175,
 )
 
-stg_button.bind("<Enter>", settings_hover)
+next_btn.bind("<Enter>", settings_hover)
 
 
 
