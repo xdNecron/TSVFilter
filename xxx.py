@@ -84,7 +84,8 @@ tooltip.place(
 
 
 
-#* CONFIGURATION WINDOW
+#* CONFIGURATION WINDOW - will be remade by rerendering root
+# TODO #2 create a function for rerendering the root
 
 def settings():
 
@@ -137,10 +138,10 @@ def settings():
 
 
 # tooltip function
-def settings_hover(e):
+def next_hover(e):
 
     tooltip.config(
-        text="Here you can configurate which tolerances the script will use to find desired values."
+        text="Load next page where you may choose tolerance(s) which will determine the final output."
     )
 
 
@@ -169,7 +170,10 @@ next_btn.place(
     width=175,
 )
 
-next_btn.bind("<Enter>", settings_hover)
+next_btn.bind(
+    "<Enter>",
+    next_hover
+)
 
 
 
@@ -261,6 +265,7 @@ display.place(
     x=323, y=130
 )
 
+
 display.config(
     state=NORMAL
 )
@@ -271,6 +276,7 @@ display.insert(
 display.config(
     state=DISABLED
 )
+
 
 display.bind(
     "<Enter>", dpl_hover
