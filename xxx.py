@@ -26,7 +26,7 @@ canvas.place(
 
 
 fld_texture = PhotoImage(
-    file="textures/file_display.png"
+    file="textures/xxx_filedisplay.png"
 )
 
 canvas.create_image(
@@ -45,7 +45,7 @@ canvas.tag_lower(rctngl)
 
 
 logo = PhotoImage(
-    file="textures/logo.png"
+    file="textures/xxx_logo.png"
 )
 
 canvas.create_image(
@@ -80,99 +80,6 @@ tooltip.place(
     x=0, y=560,
     height=40,
     width=1000
-)
-
-
-
-#* CONFIGURATION WINDOW - will be remade by rerendering root
-# TODO #2 create a function for rerendering the root
-
-def settings():
-
-    conf = Toplevel()
-    conf.config(background="white")
-    conf.geometry('200x200')
-    conf.resizable(height=False, width=False)
-
-
-
-    #checklist
-    check_1 = Checkbutton(
-        conf,
-        text="Check 1",
-        bg="white"
-    )
-    check_1.place(
-        x=60, y=40
-    )
-
-
-    check_2 = Checkbutton(
-        conf,
-        text="Check 2",
-        bg="white"
-    )
-    check_2.place(
-        x=60, y=70
-    )
-
-
-    check_3 = Checkbutton(
-        conf,
-        text="Check 3",
-        bg="white"
-    )
-    check_3.place(
-        x=60, y=100
-    )
-
-
-    check_4 = Checkbutton(
-        conf,
-        text="Check 4",
-        bg="white"
-    )
-    check_4.place(
-        x=60, y=130
-    )
-
-
-# tooltip function
-def next_hover(e):
-
-    tooltip.config(
-        text="Load next page where you may choose tolerance(s) which will determine the final output."
-    )
-
-
-# next button - re-renders root
-
-def next_page():
-
-    pass
-
-
-btn_texture = PhotoImage(
-    file="textures/next_btn.png"
-)
-
-next_btn = Button(
-    image=btn_texture,
-    highlightthickness=0,
-    borderwidth=0,
-    command=next_page,
-    pady=30,
-    bg="white"
-)
-next_btn.place(
-    x=53, y=408,
-    height=35,
-    width=175,
-)
-
-next_btn.bind(
-    "<Enter>",
-    next_hover
 )
 
 
@@ -220,7 +127,7 @@ def opn_hover(e):
 
 
 opn_texture = PhotoImage(
-    file="textures/open_file.png"
+    file="textures/xxx_openfile.png"
 )
 
 file_open = Button(
@@ -283,4 +190,117 @@ display.bind(
 )
 
 
+
+#* PAGE 2
+
+
+# textures of new elements
+title_txtr = PhotoImage(
+    file="textures/page2_title.png"
+)
+
+mainfield_txtr = PhotoImage(
+    file="textures/page2_mainfield.png"
+)
+
+
+
+def page2():
+
+    # clear current canvas and widgets
+    canvas.delete(ALL)
+    display.destroy()
+    next_btn.destroy()
+    file_open.destroy()
+
+
+    rctngl = canvas.create_rectangle(
+        0, 0, 1000, 177,
+        fill="black",
+
+    )
+
+
+    canvas.create_image(
+        77, 46,
+        anchor=NW,
+        image=title_txtr
+    )
+
+
+    # ! main field - might be removed later
+    # ! textures are defined outside the fucntion
+
+    canvas.create_image(
+        100, 120,
+        anchor=NW,
+        image=mainfield_txtr
+    )
+
+
+    # tooltip bar
+    tooltip = Label(
+        root,
+        text="",
+        anchor=NW,
+        bg="white",
+        bd=1,
+        relief=SUNKEN
+    )
+    tooltip.place(
+        x=0, y=560,
+        height=40,
+        width=1000
+    )
+
+
+
+#* next button - re-renders root
+
+# tooltip function
+def next_hover(e):
+
+    tooltip.config(
+        text="Load next page where you may choose tolerance(s) which will determine the final output."
+    )
+
+
+
+def next_page():
+
+    page2()
+
+
+btn_texture = PhotoImage(
+    file="textures/xxx_nextbtn.png"
+)
+
+next_btn = Button(
+    image=btn_texture,
+    highlightthickness=0,
+    borderwidth=0,
+    command=next_page,
+    pady=30,
+    bg="white"
+)
+next_btn.place(
+    x=53, y=408,
+    height=35,
+    width=175,
+)
+
+next_btn.bind(
+    "<Enter>",
+    next_hover
+)
+
+
 mainloop()
+
+
+"""
+TODO:
+- make a button which opens GitHub docunentation
+- create a local README file in case the device has no internet access
+
+"""
