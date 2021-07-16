@@ -3,11 +3,23 @@ import pandas as pd
 from pandas import DataFrame
 import time
 
+
+# obtain file uploaded thrugh GUI file dialog
+def obtain_file(file):
+
+    global source_file
+    source_file = open(f"{file}")
+
+
+    global df
+    df = DataFrame(pd.read_csv(source_file, sep="\t"))
+
+
 start = time.time()
 
-#* uploading experimental file 
-tsv_file = open("XC-MS_test.tsv")
-df = DataFrame(pd.read_csv(tsv_file, sep="\t"))
+# ! experimental file (if needed for test)
+#tsv_file = open("XC-MS_test.tsv")
+#df = DataFrame(pd.read_csv(tsv_file, sep="\t"))
 
 
 def pvalue_tol(pvalue_min, pvalue_max):
@@ -27,18 +39,19 @@ def pvalue_tol(pvalue_min, pvalue_max):
     last_row = rows[0]
     last = last_row - first
 
-    df_final = df2[0:last]
+    global pvalues
 
+    pvalues = df2[0:last]
     df.drop(df.index, inplace=True)
 
-    
-    print(df_final)
+    df.append(pvalues, ignore_index=True)
+
+    print(pvalues)
 
 
 def rt_tol():
 
     pass
-
 
 
 def fold_tol():
@@ -56,6 +69,5 @@ def updown():
     pass
 
 
-#pvalue_tol(0.1, 0.8)
-#end = time.time()
-#print(end - start)
+#pvalue_tol(0.5, 0.6)
+rt_tol()

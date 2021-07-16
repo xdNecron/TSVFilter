@@ -173,6 +173,9 @@ def openfile():
         initialdir=f"C:/Users/{user}"      
     )
 
+    # send filepath to the filtration script
+    yyy.obtain_file(filepath)
+
     datafile = open(filepath, 'r')
     
 
