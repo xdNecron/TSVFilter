@@ -3,6 +3,8 @@ from tkinter import *
 from tkinter import filedialog
 import webbrowser
 import getpass
+import yyy
+
 
 root = Tk()
 root.configure(bg="white")
@@ -15,6 +17,7 @@ root.resizable(height=False, width=False)
 
 #* FUNCTIONS FOR SWOTCHING BETWEEN PAGES
 
+# clears content of page 1
 def page1_clear():
 
     canvas.delete(ALL)
@@ -23,7 +26,7 @@ def page1_clear():
     docmbtn.place_forget()
     display.place_forget()
 
-
+# clears content of page 2
 def page2_clear():
 
     canvas.delete(ALL)
@@ -42,7 +45,7 @@ def prev_page():
 
 
 
-#* ELEMENTS AND WIDGETS WHICH STAY THE SAME FOR BOTH PAGES
+#* ELEMENTS AND WIDGETS WHICH STAY THE SAME FOR BOTH PAGES  
 
 canvas = Canvas(
     root,
@@ -113,10 +116,6 @@ logo = PhotoImage(
     file="textures/xxx_logo.png"
 )
 
-tm = PhotoImage(
-    file="textures/tm.png"
-)
-
 docmbtn_txtr = PhotoImage(
     file="textures/xxx_docmbtn.png"
 )
@@ -168,11 +167,10 @@ def openfile():
     filepath = filedialog.askopenfilename(
         title="Open a file, you cunt", # TODO #1 also change this later 
         filetypes=(
-            ("CSV files", "*.csv"),
-            ("text files", "*.txt"),
+            ("CSV and TSV files", "*.csv *.tsv"),
             ("All files", "*.*")
             ),
-        initialdir=f"C:/Users/{user}/Desktop"      
+        initialdir=f"C:/Users/{user}"      
     )
 
     datafile = open(filepath, 'r')
@@ -222,7 +220,7 @@ file_open.bind(
 def dpl_hover(e):
 
     tooltip.config(
-        text="In this window the content of the imported file will be displayed."
+        text="In this window is displayed the content of imported file."
     )
 
 
@@ -331,12 +329,6 @@ def page1():
     )
 
 
-    canvas.create_image(
-        937, 0,
-        anchor=NW,
-        image=tm
-    )
-
 
     #* DOCUMENTATION BUTTON
     docmbtn.place(
@@ -344,6 +336,7 @@ def page1():
         height=35,
         width=173
     )
+
 
     #* NEXT BUTTON
     next_btn.place(
@@ -373,6 +366,23 @@ page1()
 
 ###############################################################################################################################
 
+#* widgets which communicate with the filtration script
+pvalue_max_entry = Entry(
+    root,
+    width=20,
+)
+
+pvalue_min_entry = Entry(
+    root,
+    width=20,
+)
+
+process_btn = Button(
+    root,
+    text="Process",
+    bg="white",
+    command=lambda: yyy.pvalue_tol(float(pvalue_min_entry.get()), float(pvalue_max_entry.get()))
+)
 
 def page2():
 
@@ -411,8 +421,22 @@ def page2():
     )
 
 
-mainloop()
+    pvalue_min_entry.place(
+        x=100, y=100
+    )
 
+
+    pvalue_max_entry.place(
+        x=100, y=140
+    )
+    
+
+    process_btn.place(
+        x=100, y=180
+    )
+
+
+mainloop()
 
 
 """
