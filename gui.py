@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter import filedialog
 import webbrowser
 import getpass
-import yyy
+import filter
 
 
 root = Tk()
@@ -174,7 +174,7 @@ def openfile():
     )
 
     # send filepath to the filtration script
-    yyy.obtain_file(filepath)
+    filter.obtain_file(filepath)
 
     datafile = open(filepath, 'r')
     
@@ -384,7 +384,7 @@ process_btn = Button(
     root,
     text="Process",
     bg="white",
-    command=lambda: yyy.pvalue_tol(float(pvalue_min_entry.get()), float(pvalue_max_entry.get()))
+    command=lambda: filter.pvalue_tol(float(pvalue_min_entry.get()), float(pvalue_max_entry.get()))
 )
 
 def page2():
