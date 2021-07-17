@@ -15,6 +15,7 @@ root.resizable(height=False, width=False)
 
 ##################################################################################################################################
 
+
 #* FUNCTIONS FOR SWOTCHING BETWEEN PAGES
 
 # clears content of page 1
@@ -46,6 +47,7 @@ def prev_page():
 
 
 #* ELEMENTS AND WIDGETS WHICH STAY THE SAME FOR BOTH PAGES  
+
 
 canvas = Canvas(
     root,
@@ -167,8 +169,7 @@ def openfile():
     filepath = filedialog.askopenfilename(
         title="Open a file, you cunt", # TODO #1 also change this later 
         filetypes=(
-            ("CSV and TSV files", "*.csv *.tsv"),
-            ("All files", "*.*")
+            ("CSV and TSV files", "*.csv *.tsv")
             ),
         initialdir=f"C:/Users/{user}"      
     )
@@ -299,6 +300,7 @@ prev_btn.bind(
 
 #######################################################################################################################################
 
+
 #* PAGE 1   
 
 def page1():
@@ -368,6 +370,7 @@ page1()
 
 
 ###############################################################################################################################
+
 
 #* widgets which communicate with the filtration script
 pvalue_max_entry = Entry(

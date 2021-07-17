@@ -4,7 +4,15 @@ import pandas as pd
 from pandas import DataFrame
 import time
 
-#start = time.time()
+from pandas.core.indexes.base import Index
+
+start = time.time()
+
+# ! experimental file (if needed for test)
+source_file = open("XC-MS_test.tsv")
+df = DataFrame(pd.read_csv(source_file, sep="\t"))
+
+
 
 # obtain file uploaded thrugh GUI file dialog
 def obtain_file(file):
@@ -12,23 +20,15 @@ def obtain_file(file):
     global source_file
     source_file = open(f"{file}")
 
-
     global df
     df = DataFrame(pd.read_csv(source_file, sep="\t"))
-
-
-start = time.time()
-
-# ! experimental file (if needed for test)
-tsv_file = open("XC-MS_test.tsv")
-df = DataFrame(pd.read_csv(tsv_file, sep="\t"))
 
 
 def pvalue_tol(pvalue_min, pvalue_max):
 
     global df
 
-    df.sort_values(by=['pvalue'])
+    df.sort_values(by=['pvalue'], inplace=True)
 
     # find pvalue_min
     rows = df.loc[df['pvalue'] >= pvalue_min].index
@@ -36,47 +36,38 @@ def pvalue_tol(pvalue_min, pvalue_max):
 
     df2 = df[first:-1]  
 
+
     # find pvalue_max
     rows = df2.loc[df2['pvalue'] >= pvalue_max].index
     last = rows[0] - first
 
-    global pvalues
 
     pvalues = df2[0:last]
-    df.drop(df.index, inplace=True)
 
-    print(pvalues)
-
-    #return pvalues
+    df = DataFrame(pvalues)
+    print(df)
 
 
 def rt_tol(rt_min, rt_max):
 
-    global pvalues
-    global rt_filter
+    global df
 
-    rt_filter = DataFrame(pvalues)
+    df.sort_values(by=['rtmed'], inplace=True)
+    print(df)
 
-    rt_filter.sort_values(by=['rtmed'])
-    print(rt_filter)
-
-
-    # find rt_min
-    rows = rt_filter.loc[rt_filter['rtmed'] >= rt_min].index
-    #print(rows)
+    # find pvalue_min
+    rows = df.loc[df['rtmed'] >= rt_min].index
     first = rows[0]
 
-    rt_filter2 = rt_filter[first:-1]
-    #print(rt_filter2)
+    df2 = df[first:-1]  
 
-    # find rt_max
-    rows = rt_filter2.loc[rt_filter2['rtmed'] >= rt_max].index
-    #last = rows[0] - first
-    #print(rows)
+    # find pvalue_max
+    rows = df2.loc[df2['rtmed'] >= rt_max].index
+    last = rows[0] - first
 
-    #rt_final = rt_filter2[0:last]
+    rt = df2[0:last]
 
-    #print(rt_final)
+    df = DataFrame(rt)
 
 
 def fold_tol():
@@ -93,7 +84,7 @@ def updown():
 
     pass
 
-#pvalue_tol(0.5, 0.6)
-#rt_tol(0, 3)
-#end = time.time()
-#print(end - start)
+pvalue_tol(0.5, 0.51)
+#t_tol(1, 3)
+end = time.time()
+print(end - start)
