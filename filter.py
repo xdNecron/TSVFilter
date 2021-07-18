@@ -8,8 +8,8 @@ import time
 #start = time.time()
 
 # ! experimental file (if needed for test)
-source_file = open("XC-MS_test.tsv")
-df = DataFrame(pd.read_csv(source_file, sep="\t"))
+#source_file = open("XC-MS_test.tsv")
+#df = DataFrame(pd.read_csv(source_file, sep="\t"))
 
 
 # obtain file uploaded thrugh GUI file dialog
@@ -148,6 +148,11 @@ def updown(up_down):
     
     # ! tepmorary, for testing
     df.to_csv("out.tsv", sep="\t")
+
+
+def heatmap():
+
+    pass
 
 
 #pvalue_tol(0.5, 0.51)

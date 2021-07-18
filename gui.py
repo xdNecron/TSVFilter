@@ -32,6 +32,7 @@ def page2_clear():
 
     canvas.delete(ALL)
     prev_btn.place_forget()
+    process_btn.place_forget()
 
 
 def next_page():
@@ -169,7 +170,8 @@ def openfile():
     filepath = filedialog.askopenfilename(
         title="Open a file, you cunt", # TODO #1 also change this later 
         filetypes=(
-            ("CSV and TSV files", "*.csv *.tsv")
+            ("CSV and TSV files", "*.csv *.tsv"),
+            ("All files", "*.*")
             ),
         initialdir=f"C:/Users/{user}"      
     )
@@ -271,13 +273,19 @@ prevbtn_txtr = PhotoImage(
     file="textures/page2_prevbtn.png"
 )
 
+processbtn_txtr = PhotoImage(
+    file="textures/page2_processbtn.png"
+)
+
 
 #* widgets
 
+
+# previous button
 def prev_hover(e):
 
     tooltip.config(
-        text="Back to file upload"
+        text="Back to file upload."
     )
 
 
@@ -297,6 +305,29 @@ prev_btn.bind(
 )
 
 
+# process button
+
+def process_hover(e):
+
+    tooltip.config(
+        text="Iniciate processing. May take longer based on the amount of data."
+    )
+
+
+process_btn = Button(
+    root,
+    image=processbtn_txtr,
+    bd=0,
+    borderwidth=0,
+    highlightthickness=0,
+    bg="white",
+    #command=
+)
+
+process_btn.bind(
+    "<Enter>",
+    process_hover
+)
 
 #######################################################################################################################################
 
@@ -345,7 +376,7 @@ def page1():
 
     #* NEXT BUTTON
     next_btn.place(
-        x=52, y=408,
+        x=776, y=502,
         width=173,
         height=35
     )
@@ -373,22 +404,7 @@ page1()
 
 
 #* widgets which communicate with the filtration script
-pvalue_max_entry = Entry(
-    root,
-    width=20,
-)
 
-pvalue_min_entry = Entry(
-    root,
-    width=20,
-)
-
-process_btn = Button(
-    root,
-    text="Process",
-    bg="white",
-    command=lambda: filter.pvalue_tol(float(pvalue_min_entry.get()), float(pvalue_max_entry.get()))
-)
 
 def page2():
 
@@ -425,20 +441,12 @@ def page2():
         height=35,
         width=173
     )
-
-
-    pvalue_min_entry.place(
-        x=100, y=100
-    )
-
-
-    pvalue_max_entry.place(
-        x=100, y=140
-    )
     
 
     process_btn.place(
-        x=100, y=180
+        x=776, y=502,
+        width=173,
+        height=35
     )
 
 
