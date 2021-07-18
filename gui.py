@@ -1,6 +1,7 @@
 from os import stat_result
 from tkinter import *
 from tkinter import filedialog
+from typing import runtime_checkable
 import webbrowser
 import getpass
 import filter
@@ -33,6 +34,12 @@ def page2_clear():
     canvas.delete(ALL)
     prev_btn.place_forget()
     process_btn.place_forget()
+
+    rt_check.place_forget()
+    updown_check.place_forget()
+    fold_check.place_forget()
+    pvalue_check.place_forget()
+    mz_check.place_forget()
 
 
 def next_page():
@@ -100,7 +107,8 @@ next_btn = Button(
     borderwidth=0,
     command=next_page,
     pady=30,
-    bg="white"
+    bg="white",
+    state=DISABLED
 )
 
 next_btn.bind(
@@ -180,6 +188,10 @@ def openfile():
     filter.obtain_file(filepath)
 
     datafile = open(filepath, 'r')
+
+    next_btn.config(
+        state=NORMAL
+    )
     
 
     display.config(
@@ -277,8 +289,79 @@ processbtn_txtr = PhotoImage(
     file="textures/page2_processbtn.png"
 )
 
+rt_txtr = PhotoImage(
+    file="textures/page2_rt.png"
+)
 
-#* widgets
+mz_txtr = PhotoImage(
+    file="textures/page2_mz.png"
+)
+
+fold_txtr = PhotoImage(
+    file="textures/page2_fold.png"
+)
+
+updown_txtr = PhotoImage(
+    file="textures/page2_updown.png"
+)
+
+pvalue_txtr = PhotoImage(
+    file="textures/page2_pvalue.png"
+)
+
+
+
+#* widgets which communicate with the filtration script
+rt_var = IntVar()
+updown_var = IntVar()
+fold_var = IntVar()
+pvalue_var = IntVar()
+mz_var = IntVar()
+
+
+rt_check = Checkbutton(
+    root,
+    bg="white",
+    highlightthickness=0,
+    highlightcolor="white",
+    variable=rt_var,
+    bd=3
+)
+
+updown_check = Checkbutton(
+    root,
+    bg="white",
+    highlightthickness=0,
+    highlightcolor="white",
+    variable=updown_var,
+    bd=3
+)
+
+fold_check = Checkbutton(
+    root,
+    bg="white",
+    highlightthickness=0,
+    highlightcolor="white",
+    variable=fold_var
+)
+
+pvalue_check = Checkbutton(
+    root,
+    bg="white",
+    highlightthickness=0,
+    highlightcolor="white",
+    variable=pvalue_var,
+    bd=3
+)
+
+mz_check = Checkbutton(
+    root,
+    bg="white",
+    highlightthickness=0,
+    highlightcolor="white",
+    variable=mz_var,
+    bd=3
+)
 
 
 # previous button
@@ -306,7 +389,6 @@ prev_btn.bind(
 
 
 # process button
-
 def process_hover(e):
 
     tooltip.config(
@@ -403,9 +485,6 @@ page1()
 ###############################################################################################################################
 
 
-#* widgets which communicate with the filtration script
-
-
 def page2():
 
     page1_clear()
@@ -435,6 +514,37 @@ def page2():
         image=mainfield_txtr
     )
 
+    canvas.create_image(
+        123, 138,
+        anchor=NW,
+        image=rt_txtr
+    )
+
+    canvas.create_image(
+        426, 138,
+        anchor=NW,
+        image=updown_txtr
+    )
+
+    canvas.create_image(
+        655, 138,
+        anchor=NW,
+        image=fold_txtr
+    )
+
+    canvas.create_image(
+        123, 268,
+        anchor=NW,
+        image=pvalue_txtr
+    )
+
+    canvas.create_image(
+        426, 268,
+        anchor=NW,
+        image=mz_txtr
+    )
+
+
 
     prev_btn.place(
         x=77, y=502,
@@ -449,6 +559,36 @@ def page2():
         height=35
     )
 
+    # check buttons
+    rt_check.place(
+        x=138, y=150,
+        width=16,
+        height=16
+    )
+
+    updown_check.place(
+        x=444, y=150,
+        width=16,
+        height=16
+    )
+
+    fold_check.place(
+        x=673, y=150,
+        width=16,
+        height=16
+    )
+
+    pvalue_check.place(
+        x=138, y=289,
+        width=16,
+        height=16
+    )
+
+    mz_check.place(
+        x=444, y=289,
+        width=16,
+        height=16
+    )
 
 mainloop()
 
