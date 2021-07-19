@@ -1,6 +1,7 @@
 from os import stat_result
 from tkinter import *
 from tkinter import filedialog
+from tkinter import messagebox
 from typing import runtime_checkable
 import webbrowser
 import getpass
@@ -40,6 +41,30 @@ def page2_clear():
     fold_check.place_forget()
     pvalue_check.place_forget()
     mz_check.place_forget()
+
+    rtmin_entry.place_forget()
+    rtmin_desc.place_forget()
+    rtmax_entry.place_forget()
+    rtmax_desc.place_forget()
+
+    updown_entry.place_forget()
+
+    foldmin_entry.place_forget()
+    foldmin_desc.place_forget()
+    foldmax_entry.place_forget()
+    foldmax_desc.place_forget()
+
+    pvaluemin_entry.place_forget()
+    pvaluemin_desc.place_forget()
+    pvaluemax_entry.place_forget()
+    pvaluemax_desc.place_forget()
+
+    mzmin_entry.place_forget()
+    mzmin_desc.place_forget()
+    mzmax_entry.place_forget()
+    mzmax_desc.place_forget()
+
+    reset_btn.place_forget()
 
 
 def next_page():
@@ -175,6 +200,8 @@ def openfile():
     # obtain current username
     user = getpass.getuser()
 
+    global filepath
+
     filepath = filedialog.askopenfilename(
         title="Open a file, you cunt", # TODO #1 also change this later 
         filetypes=(
@@ -309,6 +336,9 @@ pvalue_txtr = PhotoImage(
     file="textures/page2_pvalue.png"
 )
 
+resetbtn_txtr = PhotoImage(
+    file="textures/page2_resetbtn.png"
+)
 
 
 #* widgets which communicate with the filtration script
@@ -363,6 +393,113 @@ mz_check = Checkbutton(
     bd=3
 )
 
+# rt entries and descs
+rtmin_entry = Entry(
+    root,
+    width=20,
+)
+
+rtmax_entry = Entry(
+    root,
+    width=20
+)
+
+rtmin_desc = Label(
+    root,
+    text="Minimum",
+    bg="white"
+)
+
+rtmax_desc = Label(
+    root,
+    text="Maximum",
+    bg="white"
+)
+
+# updown dropdown menu
+choice = StringVar()
+choice.set("UP")
+
+updown_entry = OptionMenu(
+    root,
+    choice,
+    "UP",
+    "DOWN",
+)
+
+
+# fold entries and descs
+foldmin_entry = Entry(
+    root,
+    width=15
+)
+
+foldmax_entry = Entry(
+    root,
+    width=15
+)
+
+foldmin_desc = Label(
+    root,
+    text="Minimum",
+    bg="white"
+)
+
+foldmax_desc = Label(
+    root,
+    text="Maxmimum",
+    bg="white"
+)
+
+
+# pvalue entries and descs
+pvaluemin_entry = Entry(
+    root,
+    width=20
+)
+
+pvaluemax_entry = Entry(
+    root,
+    width=20
+)
+
+pvaluemin_desc = Label(
+    root,
+    text="Minimum",
+    bg="white"
+)
+
+pvaluemax_desc = Label(
+    root,
+    text="Maximum",
+    bg="white"
+)
+
+
+# mz entries and descs
+mzmin_entry = Entry(
+    root,
+    width=25
+)
+
+mzmax_entry = Entry(
+    root,
+    width=25
+)
+
+mzmin_desc = Label(
+    root,
+    text="Minimum",
+    bg="white"
+)
+
+mzmax_desc = Label(
+    root,
+    text="Maximum",
+    bg="white"
+)
+
+
 
 # previous button
 def prev_hover(e):
@@ -389,6 +526,99 @@ prev_btn.bind(
 
 
 # process button
+def process():
+
+    if rt_var.get() == 1:
+
+        filter.rt_tol(float(rtmin_entry.get()), float(rtmax_entry.get()))
+
+        rt_check.config(
+            state=DISABLED
+        )
+
+        rtmin_entry.config(
+            state=DISABLED
+        )
+
+        rtmax_entry.config(
+            state=DISABLED
+        )
+
+        rt_var.set(0)
+
+    if updown_var.get() == 1:
+
+        filter.updown(choice.get())
+
+        updown_check.config(
+            state=DISABLED
+        )
+
+        updown_entry.config(
+            state=DISABLED
+        )
+
+        updown_var.set(0)
+
+    if fold_var.get() == 1:
+
+        filter.fold_tol(float(foldmin_entry.get()), float(foldmax_entry.get()))
+
+        fold_check.config(
+            state=DISABLED
+        )
+
+        foldmin_entry.config(
+            state=DISABLED
+        )
+
+        foldmax_entry.config(
+            state=DISABLED
+        )
+
+        fold_var.set(0)
+
+    if pvalue_var.get() == 1:
+
+        filter.pvalue_tol(float(pvaluemin_entry.get()), float(pvaluemax_entry.get()))
+
+        pvalue_check.config(
+            state=DISABLED
+        )
+
+        pvaluemin_entry.config(
+            state=DISABLED
+        )
+
+        pvaluemax_entry.config(
+            state=DISABLED
+        )
+
+        pvalue_var.set(0)
+
+    if mz_var.get() == 1:
+
+        filter.mz_tol(float(mzmin_entry.get()), float(mzmax_entry.get()))
+
+        mz_check.config(
+            state=DISABLED
+        )
+
+        mzmin_entry.config(
+            state=DISABLED
+        )
+
+        mzmax_entry.config(
+            state=DISABLED
+        )
+
+        mz_var.set(0)
+
+    print(filter.df)
+    filter.out_tsv()
+
+
+
 def process_hover(e):
 
     tooltip.config(
@@ -403,13 +633,87 @@ process_btn = Button(
     borderwidth=0,
     highlightthickness=0,
     bg="white",
-    #command=
+    command=process
 )
 
 process_btn.bind(
     "<Enter>",
     process_hover
 )
+
+
+#* reset button
+def reset_state():
+
+    filter.obtain_file(filepath)
+
+    # enable disabled boxes
+    rt_check.config(
+        state=NORMAL
+    )
+
+    rtmin_entry.config(
+        state=NORMAL
+    )
+
+    rtmax_entry.config(
+        state=NORMAL
+    )
+    
+    updown_check.config(
+        state=NORMAL
+    )
+
+    updown_entry.config(
+        state=NORMAL
+    )
+
+    pvalue_check.config(
+        state=NORMAL
+    )
+
+    pvaluemin_entry.config(
+        state=NORMAL
+    )
+
+    pvaluemax_entry.config(
+        state=NORMAL
+    )
+
+    mz_check.config(
+        state=NORMAL
+    )
+
+    mzmin_entry.config(
+        state=NORMAL
+    )
+
+    mzmax_entry.config(
+        state=NORMAL
+    )
+
+def reset_hover(e):
+
+    tooltip.config(
+        text="Discards all changes."
+    )
+
+
+reset_btn = Button(
+    root,
+    bg="white",
+    highlightthickness=0,
+    bd=0,
+    borderwidth=0,
+    image=resetbtn_txtr,
+    command=reset_state
+)
+
+reset_btn.bind(
+    "<Enter>",
+    reset_hover
+)
+
 
 #######################################################################################################################################
 
@@ -556,7 +860,11 @@ def page2():
     process_btn.place(
         x=776, y=502,
         width=173,
-        height=35
+        height=35,
+    )
+
+    reset_btn.place(
+        x=568, y=422
     )
 
     # check buttons
@@ -585,10 +893,94 @@ def page2():
     )
 
     mz_check.place(
-        x=444, y=289,
+        x=444, y=284,
         width=16,
         height=16
     )
+
+    #* entries and labels
+
+    # rt
+    rtmin_entry.place(
+        x=224, y=181
+    )
+
+    rtmin_desc.place(
+        x=144, y=181
+    )
+
+
+    rtmax_entry.place(
+        x=224, y=214
+    )
+
+    rtmax_desc.place(
+        x=144, y=214
+    )
+
+
+    # updown
+    updown_entry.place(
+        x=480, y=188
+    )
+
+
+    # fold
+    foldmin_entry.place(
+        x=740, y=181
+    )
+
+    foldmin_desc.place(
+        x=670, y=181
+    )
+
+    foldmax_entry.place(
+        x=740, y=214
+    )
+
+    foldmax_desc.place(
+        x=660, y=214
+    )
+
+
+    # pvalue
+    pvaluemin_entry.place(
+        x=224, y=334
+    )
+
+    pvaluemax_entry.place(
+        x=224, y=385
+    )
+
+    pvaluemin_desc.place(
+        x=144, y=334
+    )
+
+    pvaluemax_desc.place(
+        x=144, y=385
+    )
+
+
+    # mz entires and descs
+    mzmin_entry.place(
+        x=583, y=320
+    )
+
+    mzmin_desc.place(
+        x=458, y=320
+    )
+
+    mzmax_entry.place(
+        x=583, y=371
+    )
+
+    mzmax_desc.place(
+        x=458, y=371
+    )
+
+
+###########################################################################################
+
 
 mainloop()
 

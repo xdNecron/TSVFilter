@@ -33,20 +33,19 @@ def pvalue_tol(pvalue_min, pvalue_max):
     # find pvalue_min
     rows = df.loc[df['pvalue'] >= pvalue_min].index
     first = rows[0]
-    print(first)
 
     df2 = df[first:-1]  
 
 
     # find pvalue_max
     rows = df2.loc[df2['pvalue'] >= pvalue_max].index
+    print(rows)
     last = rows[0] - first
 
 
     pvalues = df2[0:last]
 
     df = DataFrame(pvalues)
-    print(df)
 
 
 def rt_tol(rt_min, rt_max):
@@ -59,7 +58,6 @@ def rt_tol(rt_min, rt_max):
     # find rt_min
     rows = df.loc[df['rtmed'] >= rt_min].index
     first = rows[0]
-    print(first)
 
 
     df2 = df[first:-1]  
@@ -72,7 +70,6 @@ def rt_tol(rt_min, rt_max):
     rt = df2[0:last]
 
     df = DataFrame(rt)
-    print(df)
 
 
     # ! tepmorary, for testing
@@ -100,7 +97,6 @@ def fold_tol(fold_min, fold_max):
     fold = df2[0:last]
 
     df = DataFrame(fold)
-    print(df)
 
     # ! tepmorary, for testing
     #df.to_csv("out.tsv", sep="\t")
@@ -116,7 +112,6 @@ def mz_tol(mz_min, mz_max):
     # find mz_min
     rows = df.loc[df['mzmed'] >= mz_min].index
     first = rows[0]
-    print(first)
 
 
     df2 = df[first:-1]  
@@ -129,11 +124,10 @@ def mz_tol(mz_min, mz_max):
     rt = df2[0:last]
 
     df = DataFrame(rt)
-    print(df)
 
 
     # ! tepmorary, for testing
-    df.to_csv("out.tsv", sep="\t")
+    #df.to_csv("out.tsv", sep="\t")
 
 
 
@@ -144,12 +138,42 @@ def updown(up_down):
 
     df.sort_values(by=['updown'], inplace=True, ignore_index=True)
 
-    print(df)
-    
-    # ! tepmorary, for testing
+
+    if up_down == "UP":
+
+        rows = df.loc[df['updown'] == "DOWN"].index
+        lastdown = rows[-1]
+        first = lastdown + 1
+
+        df2 = df[first:-1]
+
+        df = DataFrame(df2)
+
+    elif up_down == "DOWN":
+
+        rows = df.loc[df['updown'] == "UP"].index
+        last = rows[0] + 1
+
+        df2 = df[0:last]
+
+        df = DataFrame(df2)
+
+
+    empty = ""
+    nans = df.loc[df['updown'] == empty].index
+    print(nans)
+
+    for x in nans:
+
+        df.drop(df[x])
+
+
+def out_tsv():
+
     df.to_csv("out.tsv", sep="\t")
 
 
+# TODO find out how to do this and do it wtf even are those comments
 def heatmap():
 
     pass
@@ -163,7 +187,7 @@ def heatmap():
 
 #mz_tol(400, 800)
 
-#updown()
+#updown("UP")
 
 #end = time.time()
 #print(end - start)
