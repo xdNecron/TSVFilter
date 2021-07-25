@@ -348,6 +348,13 @@ fold_var = IntVar()
 pvalue_var = IntVar()
 mz_var = IntVar()
 
+vars = [
+    rt_var,
+    updown_var,
+    fold_var,
+    pvalue_var,
+    mz_var
+]
 
 rt_check = Checkbutton(
     root,
@@ -526,97 +533,110 @@ prev_btn.bind(
 
 
 # process button
+
+
 def process():
 
     if rt_var.get() == 1:
+        
+        rt_min = rtmin_entry.get()
+        rt_max = rtmax_entry.get()
 
-        filter.rt_tol(float(rtmin_entry.get()), float(rtmax_entry.get()))
+        if rt_min == '':
 
-        rt_check.config(
-            state=DISABLED
-        )
+            pass
+        else:
 
-        rtmin_entry.config(
-            state=DISABLED
-        )
+            filter.filter("rtmed", float(rt_min), "")
 
-        rtmax_entry.config(
-            state=DISABLED
-        )
+        if rt_max == '':
 
-        rt_var.set(0)
+            pass
+        else:
+
+            filter.filter("rtmed", "", float(rt_max))
+
 
     if updown_var.get() == 1:
 
         filter.updown(choice.get())
 
-        updown_check.config(
-            state=DISABLED
-        )
 
-        updown_entry.config(
-            state=DISABLED
-        )
-
-        updown_var.set(0)
 
     if fold_var.get() == 1:
 
-        filter.fold_tol(float(foldmin_entry.get()), float(foldmax_entry.get()))
+        fold_min = foldmin_entry.get()
+        fold_max = foldmax_entry.get()
 
-        fold_check.config(
-            state=DISABLED
-        )
+        if fold_min == '':
 
-        foldmin_entry.config(
-            state=DISABLED
-        )
+            pass
+        else:
 
-        foldmax_entry.config(
-            state=DISABLED
-        )
+            filter.filter("fold", float(fold_min), "")
 
-        fold_var.set(0)
+        if fold_max == '':
+
+            pass
+        else:
+
+            filter.filter("fold", "", float(fold_max))
+
+
 
     if pvalue_var.get() == 1:
 
-        filter.pvalue_tol(float(pvaluemin_entry.get()), float(pvaluemax_entry.get()))
+        pvalue_min = pvaluemin_entry.get()
+        pvalue_max = pvaluemax_entry.get()
 
-        pvalue_check.config(
-            state=DISABLED
-        )
+        if pvalue_min == '':
 
-        pvaluemin_entry.config(
-            state=DISABLED
-        )
+            pass
+        else:
 
-        pvaluemax_entry.config(
-            state=DISABLED
-        )
+            filter.filter("pvalue", float(pvalue_min), "")
 
-        pvalue_var.set(0)
+        if pvalue_max == '':
+
+            pass
+        else:
+
+            filter.filter("pvalue", "", float(pvalue_max))
+
+
+
 
     if mz_var.get() == 1:
+        
+        mz_min = mzmin_entry.get()
+        mz_max = mzmax_entry.get()
 
-        filter.mz_tol(float(mzmin_entry.get()), float(mzmax_entry.get()))
+        if mz_min == '':
 
-        mz_check.config(
-            state=DISABLED
-        )
+            pass
+        else:
 
-        mzmin_entry.config(
-            state=DISABLED
-        )
+            filter.filter("mzmed", float(mz_min), "")
 
-        mzmax_entry.config(
-            state=DISABLED
-        )
+        if mz_max == '':
 
-        mz_var.set(0)
+            pass
+        else:
+
+            filter.filter("mzmed", "", float(mz_max))
+
+
 
     print(filter.df)
     filter.out_tsv()
 
+    messagebox.showinfo(
+        "Filtering done.",
+
+        "The processing has finished and saved the data to \"out.tsv\".\n IMPORTANT: this file is overwritten during each process. If you don't want to lose the result, please move it to another directory."
+    )
+
+    filter.obtain_file(filepath)
 
 
 def process_hover(e):
@@ -644,6 +664,7 @@ process_btn.bind(
 
 #* reset button
 def reset_state():
+
 
     filter.obtain_file(filepath)
 
@@ -692,6 +713,7 @@ def reset_state():
         state=NORMAL
     )
 
+
 def reset_hover(e):
 
     tooltip.config(
@@ -706,7 +728,8 @@ reset_btn = Button(
     bd=0,
     borderwidth=0,
     image=resetbtn_txtr,
-    command=reset_state
+    command=reset_state,
+    state=DISABLED
 )
 
 reset_btn.bind(

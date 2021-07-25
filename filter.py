@@ -1,5 +1,5 @@
 from os import sep
-from tkinter.constants import LAST
+from tkinter.constants import FIRST, LAST
 import pandas as pd 
 from pandas import DataFrame
 import time
@@ -22,116 +22,41 @@ def obtain_file(file):
     df = DataFrame(pd.read_csv(source_file, sep="\t"))
 
 
-
-def pvalue_tol(pvalue_min, pvalue_max):
-
-    global df
-
-    df.sort_values(by=['pvalue'], inplace=True, ignore_index=True)
-
-
-    # find pvalue_min
-    rows = df.loc[df['pvalue'] >= pvalue_min].index
-    first = rows[0]
-
-    df2 = df[first:-1]  
-
-
-    # find pvalue_max
-    rows = df2.loc[df2['pvalue'] >= pvalue_max].index
-    print(rows)
-    last = rows[0] - first
-
-
-    pvalues = df2[0:last]
-
-    df = DataFrame(pvalues)
-
-
-def rt_tol(rt_min, rt_max):
+def filter(column, min, max):
 
     global df
+    
 
-    df.sort_values(by=['rtmed'], inplace=True, ignore_index=True)
+    if min == "":
+        
+        pass
+    else:
 
+        df.sort_values(by=[column], inplace=True, ignore_index=True)
 
-    # find rt_min
-    rows = df.loc[df['rtmed'] >= rt_min].index
-    first = rows[0]
+        rows = df.loc[df[column] >= float(min)].index
+        row = rows[0]
 
+        df2 = df[row:-1]
 
-    df2 = df[first:-1]  
+        df = DataFrame(df2)
 
+    
+    if max == "":
 
-    # find rt_max
-    rows = df2.loc[df2['rtmed'] >= rt_max].index
-    last = rows[0] - first
+        pass
+    else:
 
-    rt = df2[0:last]
+        df.sort_values(by=[column], inplace=True, ignore_index=True)
 
-    df = DataFrame(rt)
+        rows = df.loc[df[column] <= float(max)].index
+        row = rows[-1]
 
+        df2 = df[0:row]
 
-    # ! tepmorary, for testing
-    #df.to_csv("out.tsv", sep="\t")
-
-
-def fold_tol(fold_min, fold_max):
-
-    global df
-
-    df.sort_values(by=['fold'], inplace=True, ignore_index=True)
-
-
-    # find fold_min
-    rows = df.loc[df['fold'] >= fold_min].index
-    first = rows[0]
-
-    df2 = df[first:-1]
+        df = DataFrame(df2)
 
 
-    # find fold_max
-    rows = df2.loc[df2['fold'] >= fold_max].index
-    last = rows[0] - first
-
-    fold = df2[0:last]
-
-    df = DataFrame(fold)
-
-    # ! tepmorary, for testing
-    #df.to_csv("out.tsv", sep="\t")
-
-
-def mz_tol(mz_min, mz_max):
-
-    global df
-
-    df.sort_values(by=['mzmed'], inplace=True, ignore_index=True)
-
-
-    # find mz_min
-    rows = df.loc[df['mzmed'] >= mz_min].index
-    first = rows[0]
-
-
-    df2 = df[first:-1]  
-
-
-    # find mz_max
-    rows = df2.loc[df2['mzmed'] >= mz_max].index
-    last = rows[0] - first
-
-    rt = df2[0:last]
-
-    df = DataFrame(rt)
-
-
-    # ! tepmorary, for testing
-    #df.to_csv("out.tsv", sep="\t")
-
-
-
-# TODO finish this function after recreating gui
 def updown(up_down):
 
     global df
@@ -152,7 +77,7 @@ def updown(up_down):
     elif up_down == "DOWN":
 
         rows = df.loc[df['updown'] == "UP"].index
-        last = rows[0] + 1
+        last = rows[0]
 
         df2 = df[0:last]
 
@@ -165,7 +90,7 @@ def updown(up_down):
 
     for x in nans:
 
-        df.drop(df[x])
+        df.drop(df.index == x)
 
 
 def out_tsv():
@@ -178,16 +103,4 @@ def heatmap():
 
     pass
 
-
-#pvalue_tol(0.5, 0.51)
-
-#rt_tol(1, 3)
-
-#fold_tol(5, 10)
-
-#mz_tol(400, 800)
-
-#updown("UP")
-
-#end = time.time()
-#print(end - start)
+#filter('pvalue', "", 0.51)
