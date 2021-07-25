@@ -64,7 +64,9 @@ def page2_clear():
     mzmax_entry.place_forget()
     mzmax_desc.place_forget()
 
-    reset_btn.place_forget()
+    checkbtn.place_forget()
+    uncheckbtn.place_forget()
+
 
 
 def next_page():
@@ -336,8 +338,12 @@ pvalue_txtr = PhotoImage(
     file="textures/page2_pvalue.png"
 )
 
-resetbtn_txtr = PhotoImage(
-    file="textures/page2_resetbtn.png"
+checkbtn_txtr = PhotoImage(
+    file="textures/page2_checkall.png"
+)
+
+uncheckbtn_txtr = PhotoImage(
+    file="textures/page2_uncheckall.png"
 )
 
 
@@ -531,6 +537,42 @@ prev_btn.bind(
     prev_hover
 )
 
+# un/check all buyttons
+
+def checkall():
+
+    for var in vars:
+
+        var.set(1)
+
+
+def uncheckall():
+
+    for var in vars:
+
+        var.set(0)
+
+
+checkbtn = Button(
+    root,
+    bd=0,
+    borderwidth=0,
+    highlightthickness=0,
+    image=checkbtn_txtr,
+    command=checkall
+)
+
+uncheckbtn = Button(
+    root,
+    bd=0,
+    borderwidth=0,
+    highlightthickness=0,
+    image=uncheckbtn_txtr,
+    command=uncheckall
+)
+
+
+
 
 # process button
 
@@ -714,29 +756,6 @@ def reset_state():
     )
 
 
-def reset_hover(e):
-
-    tooltip.config(
-        text="Discards all changes."
-    )
-
-
-reset_btn = Button(
-    root,
-    bg="white",
-    highlightthickness=0,
-    bd=0,
-    borderwidth=0,
-    image=resetbtn_txtr,
-    command=reset_state,
-    state=DISABLED
-)
-
-reset_btn.bind(
-    "<Enter>",
-    reset_hover
-)
-
 
 #######################################################################################################################################
 
@@ -871,7 +890,13 @@ def page2():
         image=mz_txtr
     )
 
+    checkbtn.place(
+        x=462, y=422
+    )
 
+    uncheckbtn.place(
+        x=655, y=422
+    )
 
     prev_btn.place(
         x=77, y=502,
@@ -886,9 +911,6 @@ def page2():
         height=35,
     )
 
-    reset_btn.place(
-        x=568, y=422
-    )
 
     # check buttons
     rt_check.place(
