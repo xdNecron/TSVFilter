@@ -10,7 +10,7 @@ import filter
 
 root = Tk()
 root.configure(bg="white")
-root.title("XCMSDataAnalysis")
+root.title("TSVFilter")
 root.geometry('1000x600')
 root.resizable(height=False, width=False)
 
@@ -18,7 +18,7 @@ root.resizable(height=False, width=False)
 ##################################################################################################################################
 
 
-#* FUNCTIONS FOR SWOTCHING BETWEEN PAGES
+#* FUNCTIONS FOR SWITCHING BETWEEN PAGES
 
 # clears content of page 1
 def page1_clear():
@@ -205,7 +205,7 @@ def openfile():
     global filepath
 
     filepath = filedialog.askopenfilename(
-        title="Open a file, you cunt", # TODO #1 also change this later 
+        title="Open a TSV/CSV file",
         filetypes=(
             ("CSV and TSV files", "*.csv *.tsv"),
             ("All files", "*.*")
@@ -546,6 +546,13 @@ def checkall():
         var.set(1)
 
 
+def check_hover(e):
+
+    tooltip.config(
+        text="Checks all filtration methods."
+    )
+
+
 def uncheckall():
 
     for var in vars:
@@ -553,8 +560,15 @@ def uncheckall():
         var.set(0)
 
 
+def uncheck_hover(e):
+
+    tooltip.config(
+        text="Unhecks all filtration methods."
+    )
+
 checkbtn = Button(
     root,
+    bg="white",
     bd=0,
     borderwidth=0,
     highlightthickness=0,
@@ -562,8 +576,15 @@ checkbtn = Button(
     command=checkall
 )
 
+checkbtn.bind(
+    "<Enter>",
+    check_hover
+)
+
+
 uncheckbtn = Button(
     root,
+    bg="white",
     bd=0,
     borderwidth=0,
     highlightthickness=0,
@@ -571,7 +592,10 @@ uncheckbtn = Button(
     command=uncheckall
 )
 
-
+uncheckbtn.bind(
+    "<Enter>",
+    uncheck_hover
+)
 
 
 # process button
@@ -702,59 +726,6 @@ process_btn.bind(
     "<Enter>",
     process_hover
 )
-
-
-#* reset button
-def reset_state():
-
-
-    filter.obtain_file(filepath)
-
-    # enable disabled boxes
-    rt_check.config(
-        state=NORMAL
-    )
-
-    rtmin_entry.config(
-        state=NORMAL
-    )
-
-    rtmax_entry.config(
-        state=NORMAL
-    )
-    
-    updown_check.config(
-        state=NORMAL
-    )
-
-    updown_entry.config(
-        state=NORMAL
-    )
-
-    pvalue_check.config(
-        state=NORMAL
-    )
-
-    pvaluemin_entry.config(
-        state=NORMAL
-    )
-
-    pvaluemax_entry.config(
-        state=NORMAL
-    )
-
-    mz_check.config(
-        state=NORMAL
-    )
-
-    mzmin_entry.config(
-        state=NORMAL
-    )
-
-    mzmax_entry.config(
-        state=NORMAL
-    )
-
 
 
 #######################################################################################################################################

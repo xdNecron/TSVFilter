@@ -2,7 +2,9 @@ from os import sep
 from tkinter.constants import FIRST, LAST
 import pandas as pd 
 from pandas import DataFrame
-import time
+import numpy as np
+import numpy.random
+import matplotlib.pyplot as plt
 
 
 #start = time.time()
@@ -96,11 +98,5 @@ def updown(up_down):
 def out_tsv():
 
     df.to_csv("out.tsv", sep="\t")
-
-
-# TODO find out how to do this and do it wtf even are those comments
-def heatmap():
-
-    pass
 
 #filter('pvalue', "", 0.51)
