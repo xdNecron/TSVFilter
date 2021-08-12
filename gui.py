@@ -567,6 +567,7 @@ def uncheck_hover(e):
         text="Unhecks all filtration methods."
     )
 
+
 checkbtn = Button(
     root,
     bg="white",
@@ -612,21 +613,19 @@ def process():
         rt_min = rt_min.replace(" ", "")
         rt_max = rt_max.replace(" ", "")
 
-        print(rt_min, rt_max)
-
         if rt_min == '':
 
             pass
         else:
 
-            filter.filter("rtmed", float(rt_min), "")
+            filter.filter("rtmed", rt_min, "")
 
         if rt_max == '':
 
             pass
         else:
 
-            filter.filter("rtmed", "", float(rt_max))
+            filter.filter("rtmed", "", rt_max)
 
 
     if updown_var.get() == 1:
@@ -648,14 +647,14 @@ def process():
             pass
         else:
 
-            filter.filter("fold", float(fold_min), "")
+            filter.filter("fold", fold_min, "")
 
         if fold_max == '':
 
             pass
         else:
 
-            filter.filter("fold", "", float(fold_max))
+            filter.filter("fold", "", fold_max)
 
 
 
@@ -672,14 +671,14 @@ def process():
             pass
         else:
 
-            filter.filter("pvalue", float(pvalue_min), "")
+            filter.filter("pvalue", pvalue_min, "")
 
         if pvalue_max == '':
 
             pass
         else:
 
-            filter.filter("pvalue", "", float(pvalue_max))
+            filter.filter("pvalue", "", pvalue_max)
 
 
 
@@ -697,14 +696,14 @@ def process():
             pass
         else:
 
-            filter.filter("mzmed", float(mz_min), "")
+            filter.filter("mzmed", mz_min, "")
 
         if mz_max == '':
 
             pass
         else:
 
-            filter.filter("mzmed", "", float(mz_max))
+            filter.filter("mzmed", "", mz_max)
 
 
 

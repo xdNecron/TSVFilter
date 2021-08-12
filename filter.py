@@ -1,5 +1,7 @@
 from os import sep
 from tkinter.constants import FIRST, LAST
+from tkinter import messagebox
+from typing import final
 import pandas as pd 
 from pandas import DataFrame
 
@@ -25,36 +27,51 @@ def obtain_file(file):
 def filter(column, min, max):
 
     global df
-    
 
     if min == "":
         
         pass
     else:
 
+        try:
+
+            min = float(min)
+        
+        except ValueError:
+
+            messagebox.showerror("Error", "Please insert a number.")
+
         df.sort_values(by=[column], inplace=True, ignore_index=True)
 
-        rows = df.loc[df[column] >= float(min)].index
+        rows = df.loc[df[column] >= min].index
         row = rows[0]
 
         df2 = df[row:-1]
 
         df = DataFrame(df2)
-
     
+
     if max == "":
 
         pass
     else:
+        
+        try:
+
+            max = float(max)
+        except ValueError:
+
+            messagebox.showerror("Error", "Please insert a number.")
 
         df.sort_values(by=[column], inplace=True, ignore_index=True)
 
-        rows = df.loc[df[column] <= float(max)].index
+        rows = df.loc[df[column] <= max].index
         row = rows[-1]
 
         df2 = df[0:row]
 
         df = DataFrame(df2)
+
 
 
 def updown(up_down):
