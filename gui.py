@@ -773,7 +773,7 @@ def page1():
 
 
     canvas.create_image(
-        53, 53,
+        48, 61,
         anchor=NW,
         image=logo
     )
