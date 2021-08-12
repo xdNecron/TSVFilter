@@ -2,9 +2,7 @@ from os import sep
 from tkinter.constants import FIRST, LAST
 import pandas as pd 
 from pandas import DataFrame
-import numpy as np
-import numpy.random
-import matplotlib.pyplot as plt
+
 
 
 #start = time.time()

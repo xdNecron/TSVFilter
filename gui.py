@@ -2,6 +2,7 @@ from os import stat_result
 from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
+from tkinter import scrolledtext as scrolledtext
 from typing import runtime_checkable
 import webbrowser
 import getpass
@@ -119,7 +120,7 @@ tooltip.place(
 def next_hover(e):
 
     tooltip.config(
-        text="Load next page where you may choose tolerance(s) which will determine the final output."
+        text="Load next page where you may configure tolerance(s)."
     )
 
 
@@ -169,7 +170,7 @@ opn_texture = PhotoImage(
 # open documentation in default browser
 def opensite():
 
-    webbrowser.open_new_tab("www.youtube.com") # TODO: #3 change link when the documentation is done
+    webbrowser.open_new_tab("https://github.com/xdNecron/TSVFilter") # TODO: #3 change link when the documentation is done
 
 
 # hover function
@@ -244,7 +245,7 @@ def openfile():
 def opn_hover(e):
 
     tooltip.config(
-        text="Import mother file(s) which the script will take data from."
+        text="Import source file which the script will take data from."
     )
 
 
@@ -271,12 +272,12 @@ def dpl_hover(e):
     )
 
 
-display = Text(
+display = scrolledtext.ScrolledText(
     root,
     borderwidth=0,
     highlightthickness=0,
     height=21,
-    width=73,
+    width=71,
     padx=5,
     state=DISABLED
 )
@@ -608,6 +609,11 @@ def process():
         rt_min = rtmin_entry.get()
         rt_max = rtmax_entry.get()
 
+        rt_min = rt_min.replace(" ", "")
+        rt_max = rt_max.replace(" ", "")
+
+        print(rt_min, rt_max)
+
         if rt_min == '':
 
             pass
@@ -634,6 +640,9 @@ def process():
         fold_min = foldmin_entry.get()
         fold_max = foldmax_entry.get()
 
+        fold_min = fold_min.replace(" ", "")
+        fold_max = fold_max.replace(" ", "")
+
         if fold_min == '':
 
             pass
@@ -654,6 +663,9 @@ def process():
 
         pvalue_min = pvaluemin_entry.get()
         pvalue_max = pvaluemax_entry.get()
+
+        pvalue_min = pvalue_min.replace(" ", "")
+        pvalue_max = pvalue_max.replace(" ", "")
 
         if pvalue_min == '':
 
@@ -676,6 +688,9 @@ def process():
         
         mz_min = mzmin_entry.get()
         mz_max = mzmax_entry.get()
+
+        mz_min = mz_min.replace(" ", "")
+        mz_max = mz_max.replace(" ", "")
 
         if mz_min == '':
 
