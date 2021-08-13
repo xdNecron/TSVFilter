@@ -29,13 +29,13 @@ If you've done everything right, after running the script this menu should be di
 
 Begin with giving the script a source file. Click ***Open file*** and then choose the desired TSV file. The file will be displayed in the outlined window for you to check if it's the correct one.
 
-The ***Next*** button should be unlocked now. After clicking you will be taken to configuration menu. Here you can choose different methods of filtering based on a column in the data table.
+The ***Next*** button should be unlocked now. After clicking it you will be taken to configuration menu. Here you can choose different methods of filtering based on a column in the data table.
 
 Each column has its own small menu with a check box and two entry boxes (except for UPDOWN menu). In those you may insert the desired tolerances.
 
 ![Config menu screenshot](https://imgur.com/wAAMACj.png)
 
-> If you do not want to use a tolerance, leave the entry empty. You can unecheck the box but keep the text in the entries - the script will ignore them.
+> If you do not want to spcify a tolerance, leave the entry empty. You can unecheck the box but keep the text in the entries - the script will ignore them.
 
 After setting everything up, click ***Process*** and let the sript run. After it's finished, a pop-up message will be shown and output saved in ***<span>out.tsv</span>***. This file will be overwritten with new information each time ***Process*** is clicked, so make sure to rename or move the file to another directory.
 
