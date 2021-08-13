@@ -25,7 +25,7 @@ If you've done everything right, after running the script this menu should be di
 <!-- Obrazek prvni stranky -->
 ![First page screenshot](https://imgur.com/0ynJCvZ.png)
 
-> At the bottom of the window is a tooltip screen with basic information about certain elements when you hover your cursor on them.
+> At the bottom of the window is a tooltip screen with basic information about certain elements when you hover your cursor over them.
 
 Begin with giving the script a source file. Click ***Open file*** and then choose the desired TSV file. The file will be displayed in the outlined window for you to check if it's the correct one.
 
