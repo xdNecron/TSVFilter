@@ -28,6 +28,16 @@ def filter(column, min, max):
 
     global df
 
+    def check_existing(column):
+        global df
+        
+        try:
+            print(df.at[0, column])
+        except:
+            messagebox.showerror("Error", f"There was an error while importing the source file. *\nDoes not contain: {column}")
+
+    check_existing(column)
+
     if min == "":
         
         pass

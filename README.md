@@ -35,7 +35,7 @@ Each column has its own small menu with a check box and two entry boxes (except 
 
 ![Config menu screenshot](https://imgur.com/wAAMACj.png)
 
-> If you do not want to use a tolerance, leave the entry empty. You can unecheck the box but keep the text in the entries - the script will ignore them.
+> If you do not want to use a tolerance, leave the entry empty. You can unecheck the box and keep the text in the entries - the script will ignore them.
 
 After setting everything up, click ***Process*** and let the sript run. After it's finished, a pop-up message will be shown and output saved in ***<span>out.tsv</span>***. This file will be overwritten with new information each time ***Process*** is clicked, so make sure to rename or move the file to another directory.
 
