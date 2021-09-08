@@ -605,116 +605,122 @@ uncheckbtn.bind(
 
 def process():
 
-    if rt_var.get() == 1:
-        
-        rt_min = rtmin_entry.get()
-        rt_max = rtmax_entry.get()
+    try:
+        if rt_var.get() == 1:
+            
+            rt_min = rtmin_entry.get()
+            rt_max = rtmax_entry.get()
 
-        rt_min = rt_min.replace(" ", "")
-        rt_max = rt_max.replace(" ", "")
+            rt_min = rt_min.replace(" ", "")
+            rt_max = rt_max.replace(" ", "")
 
-        if rt_min == '':
+            if rt_min == '':
 
-            pass
-        else:
+                pass
+            else:
 
-            filter.filter("rtmed", rt_min, "")
+                filter.filter("rtmed", rt_min, "")
 
-        if rt_max == '':
+            if rt_max == '':
 
-            pass
-        else:
+                pass
+            else:
 
-            filter.filter("rtmed", "", rt_max)
-
-
-    if updown_var.get() == 1:
-
-        filter.updown(choice.get())
+                filter.filter("rtmed", "", rt_max)
 
 
+        if updown_var.get() == 1:
 
-    if fold_var.get() == 1:
-
-        fold_min = foldmin_entry.get()
-        fold_max = foldmax_entry.get()
-
-        fold_min = fold_min.replace(" ", "")
-        fold_max = fold_max.replace(" ", "")
-
-        if fold_min == '':
-
-            pass
-        else:
-
-            filter.filter("fold", fold_min, "")
-
-        if fold_max == '':
-
-            pass
-        else:
-
-            filter.filter("fold", "", fold_max)
+            filter.updown(choice.get())
 
 
 
-    if pvalue_var.get() == 1:
+        if fold_var.get() == 1:
 
-        pvalue_min = pvaluemin_entry.get()
-        pvalue_max = pvaluemax_entry.get()
+            fold_min = foldmin_entry.get()
+            fold_max = foldmax_entry.get()
 
-        pvalue_min = pvalue_min.replace(" ", "")
-        pvalue_max = pvalue_max.replace(" ", "")
+            fold_min = fold_min.replace(" ", "")
+            fold_max = fold_max.replace(" ", "")
 
-        if pvalue_min == '':
+            if fold_min == '':
 
-            pass
-        else:
+                pass
+            else:
 
-            filter.filter("pvalue", pvalue_min, "")
+                filter.filter("fold", fold_min, "")
 
-        if pvalue_max == '':
+            if fold_max == '':
 
-            pass
-        else:
+                pass
+            else:
 
-            filter.filter("pvalue", "", pvalue_max)
-
-
-
-
-    if mz_var.get() == 1:
-        
-        mz_min = mzmin_entry.get()
-        mz_max = mzmax_entry.get()
-
-        mz_min = mz_min.replace(" ", "")
-        mz_max = mz_max.replace(" ", "")
-
-        if mz_min == '':
-
-            pass
-        else:
-
-            filter.filter("mzmed", mz_min, "")
-
-        if mz_max == '':
-
-            pass
-        else:
-
-            filter.filter("mzmed", "", mz_max)
+                filter.filter("fold", "", fold_max)
 
 
 
-    print(filter.df)
-    filter.out_tsv()
+        if pvalue_var.get() == 1:
 
-    messagebox.showinfo(
-        "Filtering done.",
+            pvalue_min = pvaluemin_entry.get()
+            pvalue_max = pvaluemax_entry.get()
 
-        "The processing has finished and saved the data to \"out.tsv\".\n IMPORTANT: this file is overwritten during each process. If you don't want to lose the result, please move it to another directory."
-    )
+            pvalue_min = pvalue_min.replace(" ", "")
+            pvalue_max = pvalue_max.replace(" ", "")
+
+            if pvalue_min == '':
+
+                pass
+            else:
+
+                filter.filter("pvalue", pvalue_min, "")
+
+            if pvalue_max == '':
+
+                pass
+            else:
+
+                filter.filter("pvalue", "", pvalue_max)
+
+
+
+
+        if mz_var.get() == 1:
+            
+            mz_min = mzmin_entry.get()
+            mz_max = mzmax_entry.get()
+
+            mz_min = mz_min.replace(" ", "")
+            mz_max = mz_max.replace(" ", "")
+
+            if mz_min == '':
+
+                pass
+            else:
+
+                filter.filter("mzmed", mz_min, "")
+
+            if mz_max == '':
+
+                pass
+            else:
+
+                filter.filter("mzmed", "", mz_max)
+
+
+
+        print(filter.df)
+        filter.out_tsv()
+
+        messagebox.showinfo(
+            "Filtering done.",
+
+            "The processing has finished and saved the data to \"out.tsv\".\n IMPORTANT: this file is overwritten during each process. If you don't want to lose the result, please move it to another directory."
+        )
+    
+    except NameError:
+        filter.missing_column(filter.missing)
+
+
 
     filter.obtain_file(filepath)
 

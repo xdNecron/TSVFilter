@@ -24,24 +24,23 @@ def obtain_file(file):
     df = DataFrame(pd.read_csv(source_file, sep="\t"))
 
 
+def missing_column(column):
+
+    messagebox.showerror(
+        "Error",
+        f"A column required to run the script is missing: {column}"
+    )
+
+
 def filter(column, min, max):
 
     global df
-
-    def check_existing(column):
-        global df
-        
-        try:
-            print(df.at[0, column])
-        except:
-            messagebox.showerror("Error", f"There was an error while importing the source file. *\nDoes not contain: {column}")
-
-    check_existing(column)
+    global missing
 
     if min == "":
-        
-        pass
-    else:
+            
+        pass    
+    elif column in df.columns:
 
         try:
 
@@ -59,12 +58,15 @@ def filter(column, min, max):
         df2 = df[row:-1]
 
         df = DataFrame(df2)
-    
+
+    else:
+        missing = column
+        raise NameError("a column is missing.")
 
     if max == "":
 
         pass
-    else:
+    elif column in df.columns:
         
         try:
 
@@ -82,6 +84,11 @@ def filter(column, min, max):
 
         df = DataFrame(df2)
 
+    else:
+        missing = column
+
+        raise NameError("a column is missing.")
+
 
 
 def updown(up_down):
@@ -89,7 +96,6 @@ def updown(up_down):
     global df
 
     df.sort_values(by=['updown'], inplace=True, ignore_index=True)
-
 
     if up_down == "UP":
 
