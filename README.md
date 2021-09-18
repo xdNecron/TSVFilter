@@ -2,6 +2,8 @@
 
 This script was created for filtering XCMS output files in **scpecific format** and cannot be used for other files. Before using, confirm that the file has all of the columns listed below.
 
+This repository only contains the source code and necesarry resources. You can download and change the code however you wish for your needs.
+
 #### Required column names:
 * fold
 * updown
@@ -9,18 +11,17 @@ This script was created for filtering XCMS output files in **scpecific format** 
 * mzmed
 * rtmed
 
+If a chosen column for filtering would be missing, the script will show you an error message.
 
 ## Download
 
-Above the file list, click ***Code*** → ***Download ZIP***. After downloading, extract the contents wherever you wish. **Do not remove any of the files, otherwise the script won't work correctly.**
+Above the file list, click this [link]() to download the setup file. After downloading, install the program. **Do not remove any of the files, otherwise the script won't work correctly.**
 
-
-The script may be executed by clicking ***<span>run.exe</span>*** if Python is not installed on your device. If you have Python and required libraries installed, you can use ***<span>gui.py</span>*** to run.
 
 
 ## Usage 
 
-If you've done everything right, after running the script this menu should be displayed.
+After running, this window should appear on your screen.
 
 <!-- Obrazek prvni stranky -->
 ![First page screenshot](https://imgur.com/0ynJCvZ.png)
