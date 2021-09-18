@@ -15,7 +15,7 @@ If a chosen column for filtering would be missing, the script will show you an e
 
 ## Download
 
-Above the file list, click this [link]() to download the setup file. After downloading, install the program. **Do not remove any of the files, otherwise the script won't work correctly.**
+Above the file list, click this [link](https://www.dropbox.com/s/lncfwlog7wqhrbb/tsvfilter1.0-setup.exe?dl=0) to download the setup file. After downloading, install the program. **Do not remove any of the files, otherwise the script won't work correctly.**
 
 
 
