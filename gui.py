@@ -135,9 +135,9 @@ next_btn = Button(
     borderwidth=0,
     command=next_page,
     pady=30,
-    bg="white")
-    #state=DISABLED
-#)
+    bg="white",
+    state=DISABLED
+)
 
 next_btn.bind(
     "<Enter>",
@@ -219,11 +219,11 @@ def openfile():
 
     datafile = open(filepath, 'r')
 
-    """
+    
     next_btn.config(
         state=NORMAL
     )
-    """
+    
     
     display.config(
         state=NORMAL
