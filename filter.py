@@ -1,5 +1,4 @@
 from os import sep
-from tkinter.constants import FIRST, LAST
 from tkinter import messagebox
 from typing import final
 import pandas as pd 
