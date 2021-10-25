@@ -12,24 +12,39 @@ from pandas import DataFrame
 #source_file = open("XC-MS_test.tsv")
 #df = DataFrame(pd.read_csv(source_file, sep="\t"))
 
+sources = []
 
 # obtain file uploaded thrugh GUI file dialog
-def obtain_file(file):
+def obtain_source(source):
 
-    global source_file
-    source_file = open(f"{file}")
+    global get_dataframe, get_dataframe_columns
 
-    global df
-    df = DataFrame(pd.read_csv(source_file, sep="\t"))
+    global sources
+    sources = list(source)
+
+    
+    def get_dataframe(source):
+
+        global df
+        df = DataFrame(pd.read_csv(source, sep="\t"))  
 
 
+    def get_dataframe_columns(source):
+
+        global file_columns
+
+        tmp_df = DataFrame(pd.read_csv(source, sep="\t"))
+        return tmp_df.columns
+
+
+"""
 def missing_column(column):
 
     messagebox.showerror(
         "Error",
         f"A column required to run the script is missing: {column}"
     )
-
+"""
 
 def filter(column, min, max):
 
@@ -129,4 +144,4 @@ def out_tsv():
 
     df.to_csv("out.tsv", sep="\t")
 
-#filter('pvalue', "", 0.51)
+
