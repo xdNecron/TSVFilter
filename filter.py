@@ -34,8 +34,9 @@ def obtain_source(source):
         global file_columns
 
         tmp_df = DataFrame(pd.read_csv(source, sep="\t"))
-        return tmp_df.columns
+        return list(tmp_df.columns)
 
+        
 
 """
 def missing_column(column):

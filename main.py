@@ -11,7 +11,7 @@ Source code can be edited and distributed without distributor's financial profit
 
 #* Import fundamentals
 import os
-from os import stat_result
+from os import sep, stat_result
 from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
@@ -41,7 +41,7 @@ def open_files():
 
     source_files = filedialog.askopenfilenames(
         title="Choose a file",
-        filetypes=[("CSV and TSV files", ["*.csv", "*.tsv"])])
+        filetypes=(("CSV and TSV files", "*.csv *.tsv"), ("All files", "*.*")))
 
     filter.obtain_source(list(source_files))
 
@@ -70,23 +70,30 @@ def file_menu():
 
 
         for source in filter.sources: # display each one of uploaded files and its collumns
+            
+            print(source)
 
             # insert the name of the file            
             file_name = os.path.basename(source)
             file_menu.insert("", END, text=file_name, iid=iid_value, open=FALSE)
-            
-            parent = iid_value # get iid of current parent 
-            sub_iid = 0 # order of subitems in parent columns
 
-            column_list = filter.get_dataframe_columns(source) # returns a list of columns in current file
-            
+            column_list = filter.get_dataframe_columns(source)
+
+            sub_iid = 0 # order of subitems in parent columns
+            parent = iid_value
+
+            iid_value += 1
+
             for column in column_list: # inserts each column under corresponding file (parent)
                 
+                column = str(column)
+
                 file_menu.insert("", END, text=column, iid=iid_value, open=FALSE)
                 file_menu.move(iid_value, parent, sub_iid)
-
-                sub_iid += 1 
+                
+                sub_iid += 1
                 iid_value += 1
+
 
 
 # script body
@@ -106,7 +113,6 @@ def filter_process():
     for file in filter.sources:
 
         filter.get_dataframe(file)
-
 
 
 
