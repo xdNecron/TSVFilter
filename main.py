@@ -19,6 +19,7 @@ from tkinter import messagebox
 from typing import runtime_checkable
 import webbrowser
 import getpass
+from numpy import right_shift
 
 from ttkbootstrap import Style
 from tkinter import ttk
@@ -34,11 +35,15 @@ root.title("TSVFilter v2.0.0")
 root.resizable(height=False, width=False)
 
 # configure style of the application
-style = Style(theme='lumen')
+style = Style(theme='flatly')
 
+global iid_value
+iid_value = 0
 
 # open files and send them to the filter script
 def open_files():
+
+    global iid_value
 
     source_files = filedialog.askopenfilenames(
         title="Choose a file",
@@ -46,8 +51,8 @@ def open_files():
 
     filter.obtain_source(list(source_files))
 
-    fill_menu()
-
+    iid_value = fill_menu()
+    
 
 #* TABS
 def tab_menu():
@@ -69,7 +74,7 @@ def tab_menu():
 #* Generate file menu
 def file_menu(): 
 
-    global file_menu_frame, fill_menu, open_config
+    global file_menu_frame, fill_menu, open_config, iid_value, current_iid
 
     file_menu_frame = ttk.LabelFrame(main_tab, text="Select files", padding=20)
     file_menu_frame.grid(row=1, column=0, padx=5, pady=5)
@@ -80,11 +85,18 @@ def file_menu():
 
     file_menu.grid(row=0, column=0)
 
+    # scrollbar
+    file_menu_scrollbar = ttk.Scrollbar(file_menu_frame, orient='vertical', command=file_menu.yview)
+    file_menu_scrollbar.grid(row=0, column=1, ipady=96)
+
+    file_menu.configure(yscrollcommand=file_menu_scrollbar.set)
+
 
     def fill_menu(): # function to display imported files and their collumns in 'file_menu'
 
+        global iid_value, current_iid
+
         _files = ["1", "2", "3"]
-        iid_value = 0 # order of items in list
 
 
         for source in filter.sources: 
@@ -108,21 +120,37 @@ def file_menu():
                 sub_iid += 1
                 iid_value += 1
 
+        return iid_value
+
 
         # open config window by double-clicking an item 
         def open_config():
 
             config_window()
 
-
+    
+    # delete items from list on clicking a button
+    def remove_items():
             
+        for focus in file_menu.selection():
+
+            file_menu.delete(focus)
+        
+    
+    file_menu_delete = ttk.Button(file_menu_frame, text="-", style="primary.Outline.TButton", command=remove_items)
+    file_menu_delete.grid(row=1, column=0, sticky=E, ipadx=1, ipady=1)
+
 
 #* configuration window
 def config_window():
 
     # frame window 
     config_window_frame = ttk.LabelFrame(main_tab, text="Configure filter options", padding=5)
-    config_window_frame.grid(row=1, column=1)
+    config_window_frame.grid(row=1, column=1, sticky=N, padx=5, pady=5)
+    
+    # open config button
+    config_open_button = ttk.Button(config_window_frame, text="Configure")
+    config_open_button.grid(row=1, column=0, sticky="", columnspan=2, padx=10, pady=10)
     
     # description label
     ttk.Label(config_window_frame, text="Select a method to use:  ").grid(row=0, column=0)
@@ -143,7 +171,6 @@ def config_window():
         print(method_choice_menu.get())
 
     method_choice_menu.bind('<<ComboboxSelected>>', combobox_selected)
-
     method_choice_menu.grid(row=0, column=1)
 
     #TODO entries to insert tolerances etc.
@@ -153,13 +180,13 @@ def config_window():
 
 #* SCRIPT BODY
 def main(root):
-    
+
     tab_menu()
     file_menu()
     config_window()
 
     submit_button=ttk.Button(file_menu_frame, text="Open", style='primary.TButton', command=open_files)
-    submit_button.grid(row=1, column=0, pady=5)
+    submit_button.grid(row=1, column=0, pady=5, sticky="")
 
     root.mainloop()
 
