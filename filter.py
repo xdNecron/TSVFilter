@@ -1,20 +1,18 @@
 from os import sep
 from tkinter import messagebox
+from tkinter.constants import TRUE
 from typing import final
 import pandas as pd 
 from pandas import DataFrame
 
 
-
-#start = time.time()
-
 # ! experimental file (if needed for test)
-#source_file = open("XC-MS_test.tsv")
+#source_file = open("testfile.tsv")
 #df = DataFrame(pd.read_csv(source_file, sep="\t"))
 
 sources = []
 
-# obtain file uploaded thrugh GUI file dialog
+#* obtain file uploaded thrugh GUI file dialog
 def obtain_source(source):
 
     global get_dataframe, get_dataframe_columns
@@ -45,7 +43,7 @@ def missing_column(column):
         "Error",
         f"A column required to run the script is missing: {column}"
     )
-"""
+
 
 def filter(column, min, max):
 
@@ -105,7 +103,6 @@ def filter(column, min, max):
         raise NameError("a column is missing.")
 
 
-
 def updown(up_down):
 
     global df
@@ -139,9 +136,43 @@ def updown(up_down):
     for x in nans:
 
         df.drop(df.index == x)
+"""
 
 
-def out_tsv():
+# filter a column
+def column_filter(*sources, columns, filter_type): # filter a list of collumns
+
+    def minmax_filter(columns, min, max):
+
+        for column in columns:
+            
+            df.sort_values(by=[column], inplace=True, ignore_index=False)
+            above_min_indexes = df.loc[df[column] >= min].index
+            first_above = above_min_indexes[0]
+
+            above_min = df[first_above:-1]
+            df = DataFrame(above_min)
+
+
+            df.sort_values(by=[column], inplace=True, ignore_index=True)
+            under_max_indexes = df.loc[df[column] <= max].index
+            last_under = under_max_indexes[0]
+
+            under_max = df[0:last_under]
+            df = DataFrame(under_max)
+
+ 
+    for source in sources:
+        
+        get_dataframe(source)
+
+
+        
+    
+    
+
+
+def out_tsv(df):
 
     df.to_csv("out.tsv", sep="\t")
 
