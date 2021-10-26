@@ -63,7 +63,7 @@ def tab_menu():
     ttk.Label(tab2, text="lol").grid(row=0, column=0)
 
     tab_selection.add(main_tab, text="Main menu")
-    tab_selection.add(tab2, text="Tab 2")
+    tab_selection.add(tab2, text="Tab 2", state=DISABLED)
 
 
 #* Generate file menu
@@ -121,14 +121,33 @@ def file_menu():
 def config_window():
 
     # frame window 
-    config_widow_frame = ttk.LabelFrame(main_tab, text="Configure filter options", padding=5)
-    config_widow_frame.grid(row=1, column=1)
+    config_window_frame = ttk.LabelFrame(main_tab, text="Configure filter options", padding=5)
+    config_window_frame.grid(row=1, column=1)
     
-    # test button - for frame to show
-    submit_button=ttk.Button(config_widow_frame, text="Open", style='primary.TButton', command=open_files, state=DISABLED)
-    submit_button.grid(row=1, column=0, pady=5)
+    # description label
+    ttk.Label(config_window_frame, text="Select a method to use:  ").grid(row=0, column=0)
+    
+    #TODO dropdown menu to choose a filtering style
+    method_var = StringVar()
+
+    method_choice_menu = ttk.Combobox(config_window_frame, textvariable=method_var)
+    
+    method_menu_options = ("One value", "Minimum and maximum tol.")
+    method_choice_menu['values'] =  method_menu_options
+
+    method_choice_menu['state'] = 'readonly'
 
 
+    def combobox_selected(e):
+
+        print(method_choice_menu.get())
+
+    method_choice_menu.bind('<<ComboboxSelected>>', combobox_selected)
+
+    method_choice_menu.grid(row=0, column=1)
+
+    #TODO entries to insert tolerances etc.
+    #TODO set working comunication with function script
 
 
 

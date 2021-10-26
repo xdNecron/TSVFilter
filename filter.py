@@ -141,6 +141,7 @@ def updown(up_down):
 
 # filter a column
 def column_filter(*sources, columns, filter_type): # filter a list of collumns
+#TODO - finish after completing configuration menu in 'main.py'
 
     def minmax_filter(columns, min, max):
 
@@ -163,9 +164,10 @@ def column_filter(*sources, columns, filter_type): # filter a list of collumns
 
  
     for source in sources:
-        
-        get_dataframe(source)
-
+    
+        #minmax_filter()
+        #onevalue_filter()
+        pass
 
         
     
