@@ -12,7 +12,7 @@ Source code can be edited and distributed without distributor's financial profit
 #* Import fundamentals
 import random
 import os
-from os import sep, stat_result
+from os import scandir, sep, stat_result, supports_dir_fd
 from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
@@ -20,6 +20,7 @@ from typing import runtime_checkable
 import webbrowser
 import getpass
 from numpy import right_shift
+import getpass
 
 from ttkbootstrap import Style
 from tkinter import ttk
@@ -28,17 +29,24 @@ from tkinter import ttk
 #* import the filter & file-transfering functions
 import filter
 
+#* app window
+def window():
 
-root = Tk()
-root.title("TSVFilter v2.0.0")
-#root.geometry('1280x720')
-root.resizable(height=False, width=False)
+    global root, style
 
-# configure style of the application
-style = Style(theme='flatly')
+    root = Tk()
+    root.title("TSVFilter v2.0.0")
+    #root.geometry('1280x720')
+    root.resizable(height=False, width=False)
 
-global iid_value
-iid_value = 0
+    # configure style of the application
+    style = Style(theme='flatly')
+
+    global iid_value
+    iid_value = 0
+
+    return root
+
 
 # open files and send them to the filter script
 def open_files():
@@ -157,7 +165,7 @@ def config_window():
     
     #TODO dropdown menu to choose a filtering style
     method_var = StringVar()
-
+    
     method_choice_menu = ttk.Combobox(config_window_frame, textvariable=method_var)
     
     method_menu_options = ("One value", "Minimum and maximum tol.")
@@ -177,13 +185,64 @@ def config_window():
     #TODO set working comunication with function script
 
 
+def path_settings():
+
+    # frame for the menu
+    path_setting_frame = ttk.LabelFrame(main_tab, text="Output path settings", padding=20)
+    path_setting_frame.grid(row=2, column=1, sticky=N) 
+
+    # entry box for the path to show in
+    path_setting_entry = ttk.Entry(path_setting_frame)
+    path_setting_entry.grid(row=0, column=0, columnspan=2) # TODO fix placement
+
+    path_setting_defpath = f"C:/Users/{getpass.getuser()}" 
+    path_setting_entry.insert(0, path_setting_defpath)
+
+    # set default path and dispaly it
+    for file in os.listdir('.'):
+
+        if file.startswith("userpth"):
+
+            with open(file, 'r') as file:
+                path_setting_entry.delete(0, END) 
+                path_setting_defpath = file.readline()
+                path_setting_entry.insert(0, file.readline())
+
+    os.scandir('.')
+            
+
+    path_setting_entry['state'] = 'readonly'
+
+
+    def path_setting_setusrpath():
+
+        #TODO secure that the 'userpth.txt' file will be rewritten each time - nevermind, it rewrites itself every time
+        path_setting_setusrpath_dir = filedialog.askdirectory(initialdir=path_setting_defpath)
+
+        with open("userpth.txt", "w") as file:
+
+            file.write(path_setting_setusrpath_dir)
+            file.close()
+
+        messagebox.showinfo("Changed default directory", "Default directory has been saved to \'usrpth.txt\' and will be loaded as default.")
+
+        path_setting_entry['state'] = 'normal'
+        path_setting_entry.insert("0", path_setting_setusrpath_dir)
+        path_setting_entry['state'] = 'readonly'
+
+    # create button for changing default directory
+    path_setting_changepath_button = ttk.Button(path_setting_frame, text="Change directory", command=path_setting_setusrpath)
+    path_setting_changepath_button.grid(row=1, column=0, sticky="")
+
 
 #* SCRIPT BODY
-def main(root):
+def main(window):
 
     tab_menu()
     file_menu()
     config_window()
+    path_settings()
+
 
     submit_button=ttk.Button(file_menu_frame, text="Open", style='primary.TButton', command=open_files)
     submit_button.grid(row=1, column=0, pady=5, sticky="")
@@ -203,4 +262,4 @@ def filter_process():
 
 #* execute the code
 if __name__ == '__main__':
-    main(root)
+    main(window())
